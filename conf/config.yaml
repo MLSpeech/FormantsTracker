@@ -1,0 +1,38 @@
+defaults:  
+  - _self_  
+  - override hydra/hydra_logging: disabled  
+  - override hydra/job_logging: disabled  
+  
+hydra:  
+  output_subdir: null  
+  run:  
+    dir: .
+
+# data
+ckpt: ./saved_ckpts/196_1125.ckpt
+test_dir: ./data
+predictions_dir: ./predictions
+sample_rate: 16000
+num_workers: 4
+normalize: true
+n_fft: 512
+emph: 0.97
+
+write_predictions: true
+gaussian_kernel_size: 7
+gaussian_kernel_sigma: 1 
+
+# misc
+is_cuda: true
+test_batch_size: 4
+
+
+# model
+f1_blocks: 2
+f2_blocks: 2
+f3_blocks: 2
+f4_blocks: 2
+f4: false
+bias1d: false
+bias: true
+dropout: 0.2
