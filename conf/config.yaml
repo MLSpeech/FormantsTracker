@@ -10,7 +10,7 @@ hydra:
 
 # data
 ckpt: ./saved_ckpts/196_1125.ckpt
-test_dir: ./data
+test_dir: ./test_dir
 predictions_dir: ./predictions
 sample_rate: 16000
 num_workers: 4

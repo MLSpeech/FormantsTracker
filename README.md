@@ -47,7 +47,7 @@ For example:
   ``` 
 - Note: You can also change the default values at ```./conf/config.yaml```.
 #### Option 2 :
-- Place your ```.wav``` files in the ```./data/ ``` directory. 
+- Place your ```.wav``` files in the ```./test_dir/ ``` directory. 
 - Then, run :
   ```
   python main.py
