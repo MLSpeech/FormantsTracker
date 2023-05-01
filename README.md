@@ -67,6 +67,3 @@ For example:
               │   2.wav
               │   3.wav
   ```
-
-
->>>>>>> aa9ef71 (commit message)
