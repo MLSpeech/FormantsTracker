@@ -6,6 +6,8 @@ from dataloader import  collate_fn_padd,get_test_dataset
 import utils
 from model import FormantTracker
 from tqdm import tqdm
+import numpy as np
+import matplotlib.pyplot as plt
 
 
 class Solver:
@@ -21,17 +23,22 @@ class Solver:
     
     
     def init_test_loader(self):
+        print("Initializing test loader")
         test_dataset = get_test_dataset(self.hp)
         self.test_loader = DataLoader(test_dataset,batch_size=self.hp.test_batch_size,shuffle=False,
                                       collate_fn=collate_fn_padd, num_workers=self.hp.num_workers)
-                                      
+        print("Test loader initialized")
+
     def build_model(self):
+        print("Building model")
         self.model = FormantTracker(self.hp)
         self.model.load_state_dict(torch.load(self.hp.ckpt))
         self.model = self.model.to(self.hp.device)
         self.model.eval()
+        print("Model built")
     
     def test(self):
+        print("Testing")
         with torch.no_grad():
             for batch in tqdm(self.test_loader):
                 spects,lengths,fnames = batch
@@ -57,6 +64,23 @@ class Solver:
                 with open(pred_fname,'w') as f:
                     for i in range(length):
                         f.write(f"{i/100}\t{int(pred[0][i])}\t{int(pred[1][i])}\t{int(pred[2][i])}\n")
+                if self.hp.plot_formants:
+                    # Read prediction file
+                    times, f1, f2, f3 = np.loadtxt(pred_fname, unpack=True)
 
+                    # Plot formants and optionally spectrogram
+                    plt.figure(figsize=(10, 6))
+                    plt.plot(times, f1, label='F1', color='r')
+                    plt.plot(times, f2, label='F2', color='g')
+                    plt.plot(times, f3, label='F3', color='b')
+
+                    plt.xlabel('Time [sec]')
+                    plt.ylabel('Frequency [Hz]')
+                    plt.title(f'Formants for {fname}')
+                    plt.legend()
+                    # Save plot as PNG file in the predictions directory
+                    png_filename = os.path.join(pred_fname.replace('.pred', '.png'))
+                    plt.savefig(png_filename)
+                    plt.close()
 
 

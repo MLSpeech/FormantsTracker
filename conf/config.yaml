@@ -26,6 +26,9 @@ gaussian_kernel_sigma: 1
 is_cuda: true
 test_batch_size: 4
 
+# Plot
+plot_formants: true
+
 
 # model
 f1_blocks: 2
