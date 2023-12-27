@@ -22,6 +22,7 @@ def extract_features(wav_file, hp):
     wav, sr = taudio.load(wav_file)
     # If SR is not 16kHz, resample
     if sr != 16000:
+        print(f"Resampling {wav_file} from {sr} to 16000")
         wav = taudio.transforms.Resample(sr, 16000)(wav)
         sr = 16000
 
