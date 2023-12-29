@@ -70,14 +70,9 @@ class Solver:
 
                     # Plot formants and optionally spectrogram
                     plt.figure(figsize=(10, 6))
-                    if self.hp.plot_spectrogram:
-                        plt.imshow(spect.cpu().numpy(), origin='lower', aspect='auto', cmap='jet', interpolation='none')
-                        plt.title(f'Spectrogram for {fname}')
-                        plt.colorbar()
                     plt.plot(times, f1, label='F1', color='r')
                     plt.plot(times, f2, label='F2', color='g')
                     plt.plot(times, f3, label='F3', color='b')
-
                 
                     plt.xlabel('Time [sec]')
                     plt.ylabel('Frequency [Hz]')

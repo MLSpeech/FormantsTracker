@@ -21,10 +21,10 @@ def preemphasis(x, coeff=0.97):
 def extract_features(wav_file, hp):
     wav, sr = taudio.load(wav_file)
     # If SR is not 16kHz, resample
-    if sr != 16000:
-        print(f"Resampling {wav_file} from {sr} to 16000")
-        wav = taudio.transforms.Resample(sr, 16000)(wav)
-        sr = 16000
+    if sr != hp.sample_rate:
+        print(f"Resampling {wav_file} from {sr} to {hp.sample_rate}")
+        wav = taudio.transforms.Resample(sr, hp.sample_rate)(wav)
+        sr = hp.sample_rate
 
     # Pre-emphasis
     if hp.emph>0:
