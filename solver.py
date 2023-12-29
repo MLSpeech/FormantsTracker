@@ -45,7 +45,7 @@ class Solver:
                 spects, lengths = spects.to(self.hp.device), lengths.to(self.hp.device)
                 out,_ = self.model(spects)
                 predictions=self.get_predicted_formants(out)
-                self.write_predictions(predictions,lengths,fnames)
+                self.write_predictions(predictions,lengths,fnames,spects)
         print(f"Predictions dir - [{self.hp.predictions_dir}]")
             
     def get_predicted_formants(self,out):
@@ -56,8 +56,8 @@ class Solver:
         # prediction is set to be the median value corresponding to the arg_max bin
         return ((torch.max(out_smoothed, dim=3)[1])*self.bin_resolution)+self.bin_resolution/2  
             
-    def write_predictions(self,predictions,lengths,fnames):
-            for fname,length,pred in zip(fnames,lengths,predictions):
+    def write_predictions(self,predictions,lengths,fnames,spects):
+            for fname,length,pred,spect in zip(fnames,lengths,predictions,spects):
                 pred =pred[:length]
                 pred_fname =os.path.join(self.hp.predictions_dir,fname[len(self.hp.test_dir)+1:]).replace('.wav','.pred')
                 os.makedirs(os.path.dirname(pred_fname),exist_ok=True)
@@ -70,13 +70,18 @@ class Solver:
 
                     # Plot formants and optionally spectrogram
                     plt.figure(figsize=(10, 6))
+                    if self.hp.plot_spectrogram:
+                        plt.imshow(spect.cpu().numpy(), origin='lower', aspect='auto', cmap='jet', interpolation='none')
+                        plt.title(f'Spectrogram for {fname}')
+                        plt.colorbar()
                     plt.plot(times, f1, label='F1', color='r')
                     plt.plot(times, f2, label='F2', color='g')
                     plt.plot(times, f3, label='F3', color='b')
 
+                
                     plt.xlabel('Time [sec]')
                     plt.ylabel('Frequency [Hz]')
-                    plt.title(f'Formants for {fname}')
+                    plt.title(f'Formants for {fname} over the spectrogram')
                     plt.legend()
                     # Save plot as PNG file in the predictions directory
                     png_filename = os.path.join(pred_fname.replace('.pred', '.png'))

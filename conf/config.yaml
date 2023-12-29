@@ -28,6 +28,7 @@ test_batch_size: 4
 
 # Plot
 plot_formants: true
+plot_spectrogram: true
 
 
 # model
