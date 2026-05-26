@@ -8,7 +8,7 @@ FormantsTracker is a software package for Formant Tracking and Estiamtion using 
 
 We propose a new modeling for measuring the formants' frequencies using probabilistic heat-maps rather than traditional regression. This technique allows for flexibility in the predictions to support both in-distribution and out-of-distribution (OOD) samples with greater precision.
 
-The paper was present at Interspeech 2022 -  [Formant Estimation and Tracking using Probabilistic Heat-Maps](https://www.isca-speech.org/archive/pdfs/interspeech_2022/shrem22_interspeech.pdf). If you find our work useful please cite :
+The paper was present at Interspeech 2022 -  [Formant Estimation and Tracking using Probabilistic Heat-Maps](https://www.isca-archive.org/interspeech_2022/shrem22_interspeech.pdf). If you find our work useful please cite :
 ```
 @article{shrem2022formant,
   title={Formant Estimation and Tracking using Probabilistic Heat-Maps},
